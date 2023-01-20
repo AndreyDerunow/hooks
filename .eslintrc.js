@@ -19,6 +19,7 @@ module.exports = {
             "error",
             { anonymous: "always", named: "never" }
         ],
+        "react/display-name": "off",
         "multiline-ternary": ["off"],
         quotes: [
             "error",

@@ -1,5 +1,27 @@
 import React from "react";
+import PropTypes from "prop-types";
 import CollapseWrapper from "../common/collapse";
+
+const NumberedList = ({ children }) => {
+    // либо, если нужно быть привязанным только к выдаче на странице
+    // let counter = 0;
+    return React.Children.toArray(children).map((child) => {
+        // counter++;
+        return React.cloneElement(child, {
+            ...child.props,
+            order: +child.key.slice(1) + 1
+            // order: counter
+        });
+    });
+};
+
+NumberedList.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node
+    ])
+};
+
 const ChildrenExercise = () => {
     return (
         <CollapseWrapper title="Упражнение">
@@ -11,15 +33,21 @@ const ChildrenExercise = () => {
                 <code>React.Children.toArray</code>
             </p>
 
-            <Component />
-            <Component />
-            <Component />
+            <NumberedList>
+                <Component />
+                <Component />
+                <Component />
+            </NumberedList>
         </CollapseWrapper>
     );
 };
 
-const Component = () => {
-    return <div>Компонент списка</div>;
+const Component = ({ order }) => {
+    return <div>{order}. Компонент списка</div>;
+};
+
+Component.propTypes = {
+    order: PropTypes.number
 };
 
 export default ChildrenExercise;

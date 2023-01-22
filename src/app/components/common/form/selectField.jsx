@@ -7,11 +7,13 @@ const SelectField = ({
     onChange,
     defaultOption,
     options,
-    error
+    error,
+    ...rest
 }) => {
     const handleChange = ({ target }) => {
         onChange({ name: target.name, value: target.value });
     };
+
     const getInputClasses = () => {
         return "form-select" + (error ? " is-invalid" : "");
     };
@@ -35,6 +37,7 @@ const SelectField = ({
                 name="profession"
                 value={value}
                 onChange={handleChange}
+                {...rest}
             >
                 <option disabled value="">
                     {defaultOption}
@@ -59,4 +62,4 @@ SelectField.propTypes = {
     options: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
 
-export default SelectField;
+export default React.memo(SelectField);
